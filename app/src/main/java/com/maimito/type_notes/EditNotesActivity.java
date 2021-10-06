@@ -43,7 +43,7 @@ public class EditNotesActivity extends AppCompatActivity {
         id = getIntent().getStringExtra(Conf.UNIVERSAL_NOTE_ID);
         title = getIntent().getStringExtra(Conf.UNIVERSAL_NOTE_TITLE);
         content = getIntent().getStringExtra(Conf.UNIVERSAL_NOTE_CONTENT);
-        position = getIntent().getStringExtra("position");
+        position = getIntent().getIntExtra("position", position);
         editNotesModel = new ViewModelProvider(this).get(EditNotesModel.class);
 
         titleEdit = (TextInputEditText) findViewById(R.id.titleEdit);
@@ -88,7 +88,7 @@ public class EditNotesActivity extends AppCompatActivity {
                 Toast.makeText(EditNotesActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
 
                 this.finish();
-                adapterView.delete(position);
+
 
             default:
                 return super.onOptionsItemSelected(item);

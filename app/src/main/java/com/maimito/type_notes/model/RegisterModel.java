@@ -18,7 +18,7 @@ public class RegisterModel extends ViewModel {
     private String TAG = "retrofit";
     private MutableLiveData<ResponseHandler> errorHandlerMutableLiveData;
 
-    public LiveData<ResponseHandler> postAddNotes(String username, String password, String fullname){
+    public LiveData<ResponseHandler> register(String username, String password, String fullname){
         if (errorHandlerMutableLiveData == null){
             errorHandlerMutableLiveData = new MutableLiveData<>();
             PostRegister(username, password, fullname);

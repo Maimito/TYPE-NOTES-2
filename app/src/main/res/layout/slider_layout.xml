@@ -1,23 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/sliderlayout_imageview"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:id="@+id/sliderlayout_imageview"
-        android:src="@drawable/placeholder"/>
+        android:src="@drawable/placeholder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/sliderlayout_text"
-        android:text="Test"
-        android:textSize="20dp"
-        android:textColor="@color/white"
-        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/sliderlayout_imageview"
-        android:layout_marginBottom="10dp" />
+        android:layout_marginBottom="30dp"
+        android:background="#A3000000"
+        android:backgroundTintMode="add"
+        android:gravity="center"
+        android:text="Test"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/sliderlayout_imageview"
+        app:layout_constraintEnd_toEndOf="@+id/sliderlayout_imageview"
+        app:layout_constraintStart_toStartOf="@+id/sliderlayout_imageview" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

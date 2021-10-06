@@ -18,18 +18,18 @@ public class AddNotesModel extends ViewModel {
     private String TAG = "retrofit";
     private MutableLiveData<ResponseHandler> errorHandlerMutableLiveData;
 
-    public LiveData<ResponseHandler> postAddNotes(String note_title, String note_content, String date_modified, String date_created){
+    public LiveData<ResponseHandler> postAddNotes(String note_title, String note_content, String date_modified, String date_created, String uid){
         if (errorHandlerMutableLiveData == null){
             errorHandlerMutableLiveData = new MutableLiveData<>();
-            PostAddNotes(note_title, note_content, date_modified, date_created);
+            PostAddNotes(note_title, note_content, date_modified, date_created, uid);
         }
 
         return errorHandlerMutableLiveData;
     }
 
-    private void PostAddNotes(String note_title, String note_content, String date_modified, String date_created){
+    private void PostAddNotes(String note_title, String note_content, String date_modified, String date_created, String uid){
         DBService dbService = DBConnect.getDB();
-        dbService.postAddNotes(note_title, note_content, date_modified, date_created).enqueue(new Callback<ResponseHandler>() {
+        dbService.postAddNotes(note_title, note_content, date_modified, date_created, uid).enqueue(new Callback<ResponseHandler>() {
             @Override
             public void onResponse(Call<ResponseHandler> call, Response<ResponseHandler> response) {
                 Log.d(TAG, "PostAddNotes Success (" + response.body() + ")");

@@ -29,15 +29,14 @@ public class SliderLoginAdapter extends SliderViewAdapter<SliderLoginAdapter.Sli
 
     @Override
     public SliderAdapterVH onCreateViewHolder(ViewGroup parent){
-        View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.slider_layout, null);
+        View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.slider_layout, parent, false);
         return new SliderAdapterVH(inflate);
     }
 
     @Override
     public void onBindViewHolder(SliderAdapterVH vh, int position){
         vh.textView.setText(sliderLists.get(position).getTitle());
-        Glide.with(context).load(sliderLists.get(position).getImage()).placeholder(R.drawable.placeholder)
-                .into(vh.imageView);
+        Glide.with(context).load(sliderLists.get(position).getImage()).placeholder(R.drawable.placeholder).into(vh.imageView);
     }
 
     @Override
@@ -46,14 +45,12 @@ public class SliderLoginAdapter extends SliderViewAdapter<SliderLoginAdapter.Sli
     }
 
     class SliderAdapterVH extends SliderViewAdapter.ViewHolder{
-        View itemView;
         ImageView imageView;
         TextView textView;
         public SliderAdapterVH(View itemView){
             super(itemView);
-            imageView = itemView.findViewById(R.id.slider_image);
+            imageView = itemView.findViewById(R.id.sliderlayout_imageview);
             textView = itemView.findViewById(R.id.sliderlayout_text);
-            this.itemView = itemView;
         }
     }
 }

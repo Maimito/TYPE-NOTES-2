@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.dd.processbutton.FlatButton;
 import com.dd.processbutton.iml.ActionProcessButton;
+import com.google.android.material.slider.Slider;
 import com.google.android.material.textfield.TextInputEditText;
 import com.maimito.type_notes.adapter.SliderLoginAdapter;
 import com.maimito.type_notes.handler.Conf;
@@ -23,12 +24,15 @@ import com.maimito.type_notes.model.LoginModel;
 import com.maimito.type_notes.model.SliderList;
 import com.smarteist.autoimageslider.SliderView;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
     private TextInputEditText username;
     private TextInputEditText password;
-    private ActionProcessButton loginFlatButton;
+    private ActionProcessButton loginFlatButton, registerFlatButton;
     private LoginModel lm;
     private String uid, fullname;
     private Handler handler;
@@ -37,6 +41,11 @@ public class LoginActivity extends AppCompatActivity {
     private SharedPreferences.Editor spEditor;
     private String u,p;
     Context context;
+    private SliderList sliderList;
+
+    String[] title ={"Create notes", "Modify notes"};
+    String[] image = {"https://instagram.fcgk27-1.fna.fbcdn.net/v/t51.2885-15/sh0.08/e35/p640x640/241729582_395739688625845_2212968315757942974_n.jpg?_nc_ht=instagram.fcgk27-1.fna.fbcdn.net&_nc_cat=1&_nc_ohc=0nQOhqIym5cAX_yFnvB&edm=AP_V10EBAAAA&ccb=7-4&oh=c65f844d76b4034066a24b0bdf2f7b25&oe=61450E89&_nc_sid=4f375e",
+                        "https://instagram.fcgk27-1.fna.fbcdn.net/v/t51.2885-15/sh0.08/e35/p640x640/241729582_395739688625845_2212968315757942974_n.jpg?_nc_ht=instagram.fcgk27-1.fna.fbcdn.net&_nc_cat=1&_nc_ohc=0nQOhqIym5cAX_yFnvB&edm=AP_V10EBAAAA&ccb=7-4&oh=c65f844d76b4034066a24b0bdf2f7b25&oe=61450E89&_nc_sid=4f375e"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,13 +55,19 @@ public class LoginActivity extends AppCompatActivity {
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
         loginFlatButton = findViewById(R.id.login_btn);
+        registerFlatButton = findViewById(R.id.goto_register);
         SliderView sliderView = findViewById(R.id.login_slider);
-        sliderView.setSliderAdapter(new SliderLoginAdapter(LoginActivity.this));
+        List daftar = Data();
+        sliderView.setSliderAdapter(new SliderLoginAdapter(getApplicationContext(), daftar));
         sp = getSharedPreferences("loginPreference", MODE_PRIVATE);
         CheckLogin();
 
         loginFlatButton.setOnClickListener(view -> {
             DoLogin();
+        });
+
+        registerFlatButton.setOnClickListener(view -> {
+            startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
         });
 
     }
@@ -122,6 +137,17 @@ public class LoginActivity extends AppCompatActivity {
         } catch (Exception e){
 
         }
+    }
+
+    private List Data(){
+        ArrayList arrayList = new ArrayList<>();
+        for(int i = 0; i < title.length; i++){
+            SliderList sliderList = new SliderList();
+            sliderList.setTitle(title[i]);
+            sliderList.setImage(image[i]);
+            arrayList.add(sliderList);
+        }
+        return arrayList;
     }
 
 }

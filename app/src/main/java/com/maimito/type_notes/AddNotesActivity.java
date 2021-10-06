@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.maimito.type_notes.handler.Conf;
 import com.maimito.type_notes.model.AddNotesModel;
 
 import java.text.SimpleDateFormat;
@@ -22,7 +23,7 @@ import java.util.Locale;
 public class AddNotesActivity extends AppCompatActivity {
     private TextInputEditText addNotesTitle;
     private TextInputEditText addNotesContent;
-    private String title, content,datenow;
+    private String title, content,datenow, uid;
     private Date c = Calendar.getInstance().getTime();
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
     private AddNotesModel addNotesModel;
@@ -36,6 +37,7 @@ public class AddNotesActivity extends AppCompatActivity {
         addNotesTitle = (TextInputEditText) findViewById(R.id.add_notes_title);
         addNotesContent = (TextInputEditText) findViewById(R.id.add_notes_content);
         addNotesModel = new ViewModelProvider(this).get(AddNotesModel.class);
+        uid = getIntent().getStringExtra(Conf.UNIVERSAL_UID);
     }
 
     @Override
@@ -59,11 +61,12 @@ public class AddNotesActivity extends AppCompatActivity {
     private void postData(){
         title = String.valueOf(addNotesTitle.getText());
         content = String.valueOf(addNotesContent.getText());
+        uid = getIntent().getStringExtra(Conf.UNIVERSAL_UID);
         datenow = sdf.format(c);
         addNotesModel = new ViewModelProvider(this).get(AddNotesModel.class);
 
-        addNotesModel.postAddNotes(title, content, datenow, datenow)
-                .observe(AddNotesActivity.this, errorHandler -> {
+        addNotesModel.postAddNotes(title, content, datenow, datenow, uid)
+                .observe(AddNotesActivity.this, responseHandler -> {
                     Toast.makeText(AddNotesActivity.this, "Catatan disimpan", Toast.LENGTH_SHORT).show();
                 });
         Toast.makeText(AddNotesActivity.this, "Saved", Toast.LENGTH_SHORT).show();

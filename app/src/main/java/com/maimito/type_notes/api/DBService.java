@@ -17,6 +17,7 @@ public interface DBService {
     Call<ResponseHandler> getUserLogin(@Query("username") String username,
                                        @Query("password") String password);
 
+    @FormUrlEncoded
     @POST("user/register.php")
     Call<ResponseHandler> postRegister(@Field("username") String username,
                                        @Field("password") String password,
@@ -34,7 +35,8 @@ public interface DBService {
                                        @Field("date_modified") String
                                                         date_modified,
                                        @Field("date_created") String
-                                                        date_created);
+                                                        date_created,
+                                       @Field("uid") String uid);
 
     @FormUrlEncoded
     @POST("notes/save_notes.php")
