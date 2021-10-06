@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.maimito.type_notes.EditNotesActivity;
 import com.maimito.type_notes.R;
+import com.maimito.type_notes.handler.Conf;
 import com.maimito.type_notes.model.NotesListItem;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import java.util.List;
 public class AdapterView extends RecyclerView.Adapter<AdapterView.AdapterViewHolder> {
     private Context context;
     private List<NotesListItem> notesListItems;
+    private Conf conf;
 
     public AdapterView(Context context, List<NotesListItem> notesListItemsItems){
         this.context = context;
@@ -42,10 +44,10 @@ public class AdapterView extends RecyclerView.Adapter<AdapterView.AdapterViewHol
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, EditNotesActivity.class);
-                intent.putExtra("id", notesListItems.get(position).getId());
-                intent.putExtra("title", notesListItems.get(position).getNoteTitle());
-                intent.putExtra("content", notesListItems.get(position).getNoteContent());
-                intent.putExtra("date_modified", notesListItems.get(position).getDateModified());
+                intent.putExtra(Conf.UNIVERSAL_NOTE_ID, notesListItems.get(position).getId());
+                intent.putExtra(Conf.UNIVERSAL_NOTE_TITLE, notesListItems.get(position).getNoteTitle());
+                intent.putExtra(Conf.UNIVERSAL_NOTE_CONTENT, notesListItems.get(position).getNoteContent());
+                intent.putExtra(Conf.UNIVERSAL_DATE_MODIFIED, notesListItems.get(position).getDateModified());
                 intent.putExtra("position", position);
                 context.startActivity(intent);
             }

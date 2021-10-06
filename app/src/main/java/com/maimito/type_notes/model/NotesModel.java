@@ -25,18 +25,18 @@ public class NotesModel extends ViewModel {
 	private List<NotesListItem> notesListItems;
 	private AdapterView adapterView;
 
-	public LiveData<List<NotesListItem>> getNotes(){
+	public LiveData<List<NotesListItem>> getNotes(String uid){
 		if (notesMLD == null){
 			notesMLD = new MutableLiveData<List<NotesListItem>>();
-			loadNotes();
+			loadNotes(uid);
 		}
 
 		return notesMLD;
 	}
 
-	private void loadNotes(){
+	private void loadNotes(String uid){
 		DBService dbService = DBConnect.getDB();
-		dbService.getNotes().enqueue(new Callback<List<NotesListItem>>() {
+		dbService.getNotes(uid).enqueue(new Callback<List<NotesListItem>>() {
 			@Override
 			public void onResponse(Call<List<NotesListItem>> call, Response<List<NotesListItem>> response) {
 				if (response.isSuccessful()){

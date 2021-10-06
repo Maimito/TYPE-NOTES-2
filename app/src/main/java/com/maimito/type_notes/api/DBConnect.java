@@ -9,9 +9,12 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DBConnect {
+
     public static DBService getDB(){
+        String ipaddress = "http://192.168.137.1/";
+
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.20/typenotes/")
+                .baseUrl(ipaddress + "typenotes/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         DBService service = retrofit.create(DBService.class);

@@ -1,20 +1,18 @@
 package com.maimito.type_notes;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Toolbar;
 
 import com.baoyz.widget.PullRefreshLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.maimito.type_notes.adapter.AdapterView;
-import com.maimito.type_notes.model.NotesList;
+import com.maimito.type_notes.handler.Conf;
+import com.maimito.type_notes.handler.ResponseHandler;
 import com.maimito.type_notes.model.NotesListItem;
 import com.maimito.type_notes.model.NotesModel;
 
@@ -28,11 +26,15 @@ public class MainActivity extends AppCompatActivity {
     private AdapterView adapterView;
     private PullRefreshLayout pullRefreshLayout;
     private NotesModel notesModel;
+    private ResponseHandler responseHandler;
+    private String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        uid = getIntent().getStringExtra(Conf.UNIVERSAL_UID);
 
         floatingActionButton = (FloatingActionButton) findViewById(R.id.add_notes);
         rvNotes = (RecyclerView) findViewById(R.id.rv_notes);
@@ -43,12 +45,9 @@ public class MainActivity extends AppCompatActivity {
 
         getData();
 
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, AddNotesActivity.class);
-                startActivity(intent);
-            }
+        floatingActionButton.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, AddNotesActivity.class);
+            startActivity(intent);
         });
 
     }
@@ -56,12 +55,9 @@ public class MainActivity extends AppCompatActivity {
     public void getData(){
 
         notesModel = new ViewModelProvider(this).get(NotesModel.class);
-        notesModel.getNotes().observe(this, new Observer<List<NotesListItem>>() {
-            @Override
-            public void onChanged(List<NotesListItem> notesListItems) {
-                adapterView = new AdapterView(MainActivity.this, notesListItems);
-                rvNotes.setAdapter(adapterView);
-            }
+        notesModel.getNotes(uid ).observe(this, notesListItems -> {
+            adapterView = new AdapterView(MainActivity.this, notesListItems);
+            rvNotes.setAdapter(adapterView);
         });
     }
 

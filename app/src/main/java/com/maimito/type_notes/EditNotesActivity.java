@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.maimito.type_notes.handler.Conf;
 import com.maimito.type_notes.model.AddNotesModel;
 import com.maimito.type_notes.model.DeleteNotesModel;
 import com.maimito.type_notes.model.EditNotesModel;
@@ -27,6 +28,7 @@ public class EditNotesActivity extends AppCompatActivity {
     private EditNotesModel editNotesModel;
     private DeleteNotesModel deleteNotesModel;
     private Date c = Calendar.getInstance().getTime();
+    private Conf conf;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
     @Override
@@ -35,9 +37,9 @@ public class EditNotesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_notes);
 
 
-        id = getIntent().getStringExtra("id");
-        title = getIntent().getStringExtra("title");
-        content = getIntent().getStringExtra("content");
+        id = getIntent().getStringExtra(Conf.UNIVERSAL_NOTE_ID);
+        title = getIntent().getStringExtra(Conf.UNIVERSAL_NOTE_TITLE);
+        content = getIntent().getStringExtra(Conf.UNIVERSAL_NOTE_CONTENT);
         editNotesModel = new ViewModelProvider(this).get(EditNotesModel.class);
 
         titleEdit = (TextInputEditText) findViewById(R.id.titleEdit);

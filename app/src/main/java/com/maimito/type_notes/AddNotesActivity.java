@@ -61,7 +61,6 @@ public class AddNotesActivity extends AppCompatActivity {
         content = String.valueOf(addNotesContent.getText());
         datenow = sdf.format(c);
         addNotesModel = new ViewModelProvider(this).get(AddNotesModel.class);
-        Toast.makeText(this, title + "\n" + content + "\n" + datenow, Toast.LENGTH_LONG).show();
 
         addNotesModel.postAddNotes(title, content, datenow, datenow)
                 .observe(AddNotesActivity.this, errorHandler -> {

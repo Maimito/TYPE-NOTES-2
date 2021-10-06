@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.maimito.type_notes.api.DBConnect;
 import com.maimito.type_notes.api.DBService;
+import com.maimito.type_notes.handler.ResponseHandler;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -15,9 +16,9 @@ import retrofit2.Response;
 
 public class AddNotesModel extends ViewModel {
     private String TAG = "retrofit";
-    private MutableLiveData<ErrorHandler> errorHandlerMutableLiveData;
+    private MutableLiveData<ResponseHandler> errorHandlerMutableLiveData;
 
-    public LiveData<ErrorHandler> postAddNotes(String note_title, String note_content, String date_modified, String date_created){
+    public LiveData<ResponseHandler> postAddNotes(String note_title, String note_content, String date_modified, String date_created){
         if (errorHandlerMutableLiveData == null){
             errorHandlerMutableLiveData = new MutableLiveData<>();
             PostAddNotes(note_title, note_content, date_modified, date_created);
@@ -28,14 +29,14 @@ public class AddNotesModel extends ViewModel {
 
     private void PostAddNotes(String note_title, String note_content, String date_modified, String date_created){
         DBService dbService = DBConnect.getDB();
-        dbService.postAddNotes(note_title, note_content, date_modified, date_created).enqueue(new Callback<ErrorHandler>() {
+        dbService.postAddNotes(note_title, note_content, date_modified, date_created).enqueue(new Callback<ResponseHandler>() {
             @Override
-            public void onResponse(Call<ErrorHandler> call, Response<ErrorHandler> response) {
+            public void onResponse(Call<ResponseHandler> call, Response<ResponseHandler> response) {
                 Log.d(TAG, "PostAddNotes Success (" + response.body() + ")");
             }
 
             @Override
-            public void onFailure(Call<ErrorHandler> call, Throwable t) {
+            public void onFailure(Call<ResponseHandler> call, Throwable t) {
                 Log.d(TAG, "PostAddNotes Failed (" + t.getMessage() + ")");
             }
         });

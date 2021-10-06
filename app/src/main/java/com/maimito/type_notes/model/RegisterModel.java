@@ -14,32 +14,37 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DeleteNotesModel extends ViewModel {
+public class RegisterModel extends ViewModel {
     private String TAG = "retrofit";
     private MutableLiveData<ResponseHandler> errorHandlerMutableLiveData;
 
-    public LiveData<ResponseHandler> postDeleteNotes(String id){
+    public LiveData<ResponseHandler> postAddNotes(String username, String password, String fullname){
         if (errorHandlerMutableLiveData == null){
             errorHandlerMutableLiveData = new MutableLiveData<>();
-            PostDeleteNotes(id);
+            PostRegister(username, password, fullname);
         }
 
         return errorHandlerMutableLiveData;
     }
 
-    private void PostDeleteNotes(String id){
+    private void PostRegister(String username, String password, String fullname){
         DBService dbService = DBConnect.getDB();
-        dbService.postDeleteNotes(id).enqueue(new Callback<ResponseHandler>() {
+        dbService.postRegister(username, password, fullname).enqueue(new Callback<ResponseHandler>() {
             @Override
             public void onResponse(Call<ResponseHandler> call, Response<ResponseHandler> response) {
-                Log.d(TAG, "PostDeleteNotes Success (" + response.body() + ")");
+                if (response.isSuccessful()){
+                    errorHandlerMutableLiveData.setValue(response.body());
+                    Log.d(TAG, "Register Success (" + response.body() + ")");
+                } else {
+                    errorHandlerMutableLiveData.setValue(response.body());
+                    Log.d(TAG, "Register Unsuccessful (" + response.body() + ")");
+                }
             }
 
             @Override
             public void onFailure(Call<ResponseHandler> call, Throwable t) {
-                Log.d(TAG, "PostDeleteNotes Failed (" + t.getMessage() + ")");
+                Log.d(TAG, "Register Failed (" + t.getMessage() + ")");
             }
         });
     }
-
 }
