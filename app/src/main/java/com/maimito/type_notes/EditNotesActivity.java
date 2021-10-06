@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.maimito.type_notes.adapter.AdapterView;
 import com.maimito.type_notes.handler.Conf;
 import com.maimito.type_notes.model.AddNotesModel;
 import com.maimito.type_notes.model.DeleteNotesModel;
@@ -23,12 +24,14 @@ import java.util.Locale;
 
 public class EditNotesActivity extends AppCompatActivity {
     private String id, title, content, datenow;
+    private int position;
     private TextInputEditText titleEdit;
     private TextInputEditText contentEdit;
     private EditNotesModel editNotesModel;
     private DeleteNotesModel deleteNotesModel;
     private Date c = Calendar.getInstance().getTime();
     private Conf conf;
+    private AdapterView adapterView;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
     @Override
@@ -40,6 +43,7 @@ public class EditNotesActivity extends AppCompatActivity {
         id = getIntent().getStringExtra(Conf.UNIVERSAL_NOTE_ID);
         title = getIntent().getStringExtra(Conf.UNIVERSAL_NOTE_TITLE);
         content = getIntent().getStringExtra(Conf.UNIVERSAL_NOTE_CONTENT);
+        position = getIntent().getStringExtra("position");
         editNotesModel = new ViewModelProvider(this).get(EditNotesModel.class);
 
         titleEdit = (TextInputEditText) findViewById(R.id.titleEdit);
@@ -84,6 +88,8 @@ public class EditNotesActivity extends AppCompatActivity {
                 Toast.makeText(EditNotesActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
 
                 this.finish();
+                adapterView.delete(position);
+
             default:
                 return super.onOptionsItemSelected(item);
         }

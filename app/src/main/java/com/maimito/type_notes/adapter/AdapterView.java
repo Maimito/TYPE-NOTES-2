@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.maimito.type_notes.EditNotesActivity;
 import com.maimito.type_notes.R;
 import com.maimito.type_notes.handler.Conf;
+import com.maimito.type_notes.model.NotesList;
 import com.maimito.type_notes.model.NotesListItem;
 
 import java.util.ArrayList;
@@ -68,5 +69,10 @@ public class AdapterView extends RecyclerView.Adapter<AdapterView.AdapterViewHol
     @Override
     public int getItemCount() {
         return notesListItems.size();
+    }
+
+    public void delete(int position){
+        this.notesListItems.remove(position);
+        notifyDataSetChanged();
     }
 }

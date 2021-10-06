@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,9 +16,14 @@ import android.widget.Toast;
 import com.dd.processbutton.FlatButton;
 import com.dd.processbutton.iml.ActionProcessButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.maimito.type_notes.adapter.SliderLoginAdapter;
 import com.maimito.type_notes.handler.Conf;
 import com.maimito.type_notes.handler.ResponseHandler;
 import com.maimito.type_notes.model.LoginModel;
+import com.maimito.type_notes.model.SliderList;
+import com.smarteist.autoimageslider.SliderView;
+
+import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
     private TextInputEditText username;
@@ -30,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     private SharedPreferences sp;
     private SharedPreferences.Editor spEditor;
     private String u,p;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +46,8 @@ public class LoginActivity extends AppCompatActivity {
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
         loginFlatButton = findViewById(R.id.login_btn);
+        SliderView sliderView = findViewById(R.id.login_slider);
+        sliderView.setSliderAdapter(new SliderLoginAdapter(LoginActivity.this));
         sp = getSharedPreferences("loginPreference", MODE_PRIVATE);
         CheckLogin();
 
